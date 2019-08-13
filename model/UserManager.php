@@ -27,7 +27,7 @@ class UserManager extends Manager
 	public function createUser($name, $email, $password)
 	{
 		$db = $this->dbConnect();
-		$newUser = $db->prepare('INSERT INTO users(name, email, password, status, register_date, highest_score, total_games) VALUES(?, ?, ?, "admin", CURDATE(), "0", "0")');
+		$newUser = $db->prepare('INSERT INTO users(name, email, password, status, register_date, highest_score, total_games) VALUES(?, ?, ?, "user", CURDATE(), "0", "0")');
 		$createNew = $newUser->execute([$name, $email, $password]);
 		
 		return $createNew;
