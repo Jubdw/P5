@@ -1,10 +1,17 @@
+@font-face {
+    font-family: 'folkard_';
+    src: url('webfont/folkard_.ttf') format('truetype');
+}
+
 body 
 {
     position: relative;
     width: 100%;
     margin: 0 0;
     font-family: Calibri,Helvetica,Arial,sans-serif;
-    background-color: grey;
+    background: #304352;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #d7d2cc, #304352);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #d7d2cc, #304352); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 header
 {
@@ -13,7 +20,7 @@ header
     position: fixed;
     top: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 70px;
@@ -22,11 +29,12 @@ header
 }
 .header-logo img
 {
+    margin-left: 40px;
     max-height: 60px;
 }
 nav
 {
-    font-size: 1.01em;
+    font-size: 1.2em;
     height: 100%;
 }
 nav ul
@@ -46,11 +54,12 @@ nav li
 nav a, footer a
 {
     text-decoration: none;
-    color: rgb(255,100,100);
+    color: rgb(200,50,50);
 }
 nav a:hover, footer a:hover
 {
-    color: rgb(200,0,0);
+    color: rgb(255,100,100);
+    font-weight: bold;
 }
 .profile-link a
 {
@@ -76,7 +85,9 @@ h1, h2, h3, h4
 }
 h1
 {
-    font-size: 4em;
+    font-family: 'folkard_', Arial, sans-serif;
+    font-size: 3.5em;
+    color: black;
     text-transform: uppercase;
 }
 h2
@@ -129,7 +140,7 @@ footer
 
 .title
 {
-    height: 150px;
+    height: 250px;
 }
 
 .titles-contact
@@ -163,8 +174,42 @@ footer
     text-decoration-line: underline;
     color: rgb(55,55,55);
 }
-
-
+/* ------ HOME VIEW ------ */
+.home-news
+{
+    width: 80%;
+    margin: 0 10%;
+    border: 1px solid black;
+    border-radius: 1%;
+    background-color: rgba(250,250,250, 0.8);
+    font-size: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.home-news-tilte
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 10px 0;
+}
+.h-news
+{
+    width: 40%;
+    margin: 5%;
+    padding: 1%;
+    border: 1px solid black;
+    border-radius: 1%;
+    background-color: rgba(250,250,250, 0.8);
+    font-size: 1em;
+}
+.news-title a
+{
+    font-family: 'folkard_';
+    color: black;
+}
 /* ------ ERROR VIEW ------ */
 
 .error-div
