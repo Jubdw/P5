@@ -43,6 +43,12 @@
     	</div>
 
     	<footer>
+            <div id="legal">
+                <p>Copyright © 2019 - Julien Barré - Tous droits réservés - <a href="#">Mentions Légales</a> | Site réalisé par <a href="https://julienbarre.fr">JBDW</a></p>
+                <div class="footer-links">
+                <p>Plan du site : <a href="index.php">Acceuil</a> | <a href="#">Actus</a> | <a href="#">À propos</a> | <a href="#">Contact</a> | <a href="#">Scores</a> | <?php if (isset($_SESSION['id']) AND isset($_SESSION['name'])) { ?><span class="profile-link"><a href="#"><?php echo $_SESSION['name'] ?></a></span> | <a href="index.php?action=logout">Déconnexion</a><?php } else { ?><a href="index.php?action=register">Connexion</a><?php }?></p>
+                </div>
+            </div>
     	</footer>
 
     </body>
