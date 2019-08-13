@@ -33,6 +33,22 @@ try {
         elseif ($_GET['action'] == 'register') {
             register();
         }
+        elseif ($_GET['action'] == 'news') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                news();
+            }
+            else {
+                throw new Exception('Aucune news sélectionnée !');
+            }
+        }
+        elseif ($_GET['action'] == 'listNews') {
+            if (isset($_GET['page']) && $_GET['page'] > 0) {
+                listNews($_GET['page']);
+            }
+            else {
+                throw new Exception('Ne modifiez pas l\'url SVP');
+            }
+        }
 	}
 	else {
         welcome();
