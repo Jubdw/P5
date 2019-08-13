@@ -1,15 +1,50 @@
 <?php
 
 use Ju\Poulette\Model\UserManager;
+use Ju\Poulette\Model\NewsManager;
 
 require_once('model/UserManager.php');
+require_once('model/NewsManager.php');
+
 // Acceuil ---------------------------------------------------------------------------------
 function welcome()
 {
+    $newsManager = new NewsManager();
+    $news = $newsManager->getWelcomeNews();
+
 	require('view/frontend/homeView.php');
 }
+// fonctions NewsManager ------------------------------------------------------
 
-// fonctions UserManager -------------------------------------------------------------------
+function listNews($page)
+{
+    $newsManager = new NewsManager();
+
+    $countN = $newsManager->countNews();
+    $newsNb = $countN['newsNb'];
+    $perPage = 5;
+    $maxPages = ceil($newsNb/$perPage);
+    if ($page <= $maxPages) {
+        $currentPage = $page;
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = (($currentPage - 1) * $perPage);
+
+    $news = $newsManager->getNewsPaged($start, $perPage);
+
+    require('view/frontend/listNewsView.php');
+}
+
+function news()
+{
+    $newsManager = new NewsManager();
+    $news = $newsManager->getNews($_GET['id']);
+
+    require('view/frontend/newsView.php');
+}
+// fonctions UserManager ------------------------------------------------------
 
 function connect($name)
 {
