@@ -126,3 +126,8 @@ function register()
 {
     require('view/frontend/registerView.php');
 }
+
+function playGame()
+{
+    require('view/frontend/gameView.php');
+}

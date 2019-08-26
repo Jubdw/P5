@@ -8,23 +8,20 @@ body
     position: relative;
     width: 100%;
     margin: 0 0;
-    font-family: Calibri,Helvetica,Arial,sans-serif;
-    background: #304352;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #d7d2cc, #304352);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #d7d2cc, #304352); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: Calibri,Helvetica,Arial,sans-serif;    
 }
 header
 {
     margin: 0 0;
     z-index: 10;
-    position: fixed;
+    position: absolute;
     top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 70px;
-    background-color: rgb(55,55,55);
+    background-color: rgb(32,32,32);
     color: white;
 }
 .header-logo img
@@ -36,6 +33,7 @@ nav
 {
     font-size: 1.2em;
     height: 100%;
+    margin-right: 40px;
 }
 nav ul
 {
@@ -59,7 +57,6 @@ nav a, footer a
 nav a:hover, footer a:hover
 {
     color: rgb(255,100,100);
-    font-weight: bold;
 }
 .profile-link a
 {
@@ -73,7 +70,11 @@ nav a:hover, footer a:hover
 {
     position: relative;
     top: 70px;
-    margin-bottom: 12%;
+    min-height: 80vh;
+    margin-bottom: 6%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 h1, h2, h3, h4
 {
@@ -106,29 +107,26 @@ h4
 
 footer
 {
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
 
-.footer-links
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
 #legal
 {
-    height: 60px;
-    position: relative;
+    height: 80px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background-color: rgb(55,55,55);
+    background-color: rgb(32,32,32);
     color: white;
 }
-
+#legal p { margin: 2px; }
+.links
+{
+    text-align: center;
+}
 .titles, .title
 {
     height: 250px;
@@ -140,7 +138,7 @@ footer
 
 .title
 {
-    height: 250px;
+    height: 200px;
 }
 
 .titles-contact
@@ -199,6 +197,36 @@ footer
 
 
 /* ------ HOME VIEW ------ */
+.poulette
+{
+    width: 100%;
+    height: 93vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(40,40,40);
+    margin: 0;
+}
+.poulette a
+{
+    color: white;
+}
+.poulette a:hover
+{
+    color: red;
+}
+.poulette h1
+{
+    color: white;
+}
+.animation-poulette
+{
+    
+    width: 100%;
+    height: 150px;
+    background-color: rgb(145,145,145);
+}
+
 .home-news
 {
     width: 80%;
@@ -209,16 +237,23 @@ footer
     font-size: 1em;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 }
-.home-news-tilte
+.home-news-title
 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 0 0 10px 0;
 }
+.home-news-title a
+{
+    text-decoration: none;
+    color: black;
+}
+.home-news-title a:hover { text-decoration: underline; }
 .h-news
 {
     width: 40%;
@@ -352,4 +387,56 @@ footer
     display: flex;
     justify-content: center;
     transform: scale(1.4);
+}
+/* ------ GAME VIEW  ------ */
+.canvas-div
+{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#canvas-game
+{
+    border: 1px solid black;
+}
+/* ------ SCROLL BUTTON ------ */
+a#b-Back
+{
+    border-radius:3px;
+    padding:20px;
+    font-size:15px;
+    text-align:center;
+    color:#fff;
+    background:rgba(24,24,24, 0.9);
+    position:fixed;
+    right:20px;
+    opacity:1;
+    z-index:99999;
+    transition:all ease-in 0.2s;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    text-decoration: none;
+}
+a#b-Back:before
+{
+    content: "\25b2";
+}
+a#b-Back:hover
+{
+    background:rgba(0, 0, 0, 1);
+    transition:all ease-in 0.2s;
+}
+a#b-Back.b-Hidden
+{
+    bottom:-35px;
+    opacity:0;
+    transition:all ease-in 0.5s;
+}
+
+a#b-Back.b-Visible
+{
+    bottom:20px;
+    opacity:1;
 }

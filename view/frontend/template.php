@@ -4,6 +4,10 @@
         <meta charset="utf-8" />
         <title><?= $title ?></title>
         <link href="public/css/style.css" rel="stylesheet" />
+        <script src="public/js/jquery-3.3.1.js"></script>
+        <script src="public/js/ajax.js"></script>
+        <script src="public/js/map.js"></script>
+        <script src="public/js/scroll.js"></script>
     </head>
 
     <body>
@@ -12,7 +16,7 @@
     		<div class="header-logo"><a href="index.php"><img src="public/images/logo.png" alt="Elle est où la poulette ?"></a></div>
     		<nav>
     			<ul>
-    				<li><a href="#">Actus</a></li>
+    				<li><a href="index.php?action=listNews&amp;page=1">Actus</a></li>
     				<li><a href="#">À propos</a></li>
     				<li><a href="#">Contact</a></li>
     				<li><a href="#">Scores</a></li>
@@ -42,12 +46,12 @@
         <?= $content ?>
     	</div>
 
+        <div><a id="b-Back" class="b-Hidden" href="#up"></a></div>
+
     	<footer>
             <div id="legal">
-                <p>Copyright © 2019 - Julien Barré - Tous droits réservés - <a href="#">Mentions Légales</a> | Site réalisé par <a href="https://julienbarre.fr">JBDW</a></p>
-                <div class="footer-links">
-                <p>Plan du site : <a href="index.php">Acceuil</a> | <a href="#">Actus</a> | <a href="#">À propos</a> | <a href="#">Contact</a> | <a href="#">Scores</a> | <?php if (isset($_SESSION['id']) AND isset($_SESSION['name'])) { ?><span class="profile-link"><a href="#"><?php echo $_SESSION['name'] ?></a></span> | <a href="index.php?action=logout">Déconnexion</a><?php } else { ?><a href="index.php?action=register">Connexion</a><?php }?></p>
-                </div>
+                <p>Copyright © 2019 - <a href="https://julienbarre.fr">JBDW</a></p>
+                <p>Kaamelott est la propriété d'Alexandre Astier.</p>
             </div>
     	</footer>
 

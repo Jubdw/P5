@@ -4,8 +4,11 @@
 
 <div class="title">
     <h1>Actus de la Poulette</h1>
-    <p><a href="index.php">Retour à l'acceuil</a></p><br>
-    <p><a href="index.php?action=listNews&amp;page=1">Retour à la liste des news</a></p>
+</div>
+
+<div class="links">
+	<p><a href="index.php">Retour à l'acceuil</a></p><br>
+    <p><a href="index.php?action=listNews&amp;page=1">Retour à la liste des news</a></p><br>
 </div>
 
 <div class="news news-post">

@@ -49,6 +49,9 @@ try {
                 throw new Exception('Ne modifiez pas l\'url SVP');
             }
         }
+        elseif ($_GET['action'] == 'play') {
+            playGame();
+        }
 	}
 	else {
         welcome();
