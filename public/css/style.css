@@ -399,6 +399,7 @@ footer
 }
 #canvas-game
 {
+    margin-top: 60px;
     border: 1px solid black;
 }
 /* ------ SCROLL BUTTON ------ */

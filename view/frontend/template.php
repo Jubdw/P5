@@ -6,7 +6,6 @@
         <link href="public/css/style.css" rel="stylesheet" />
         <script src="public/js/jquery-3.3.1.js"></script>
         <script src="public/js/ajax.js"></script>
-        <script src="public/js/map.js"></script>
         <script src="public/js/scroll.js"></script>
     </head>
 

@@ -1,48 +1,9 @@
 class CanvasMap {
-    constructor() {
+    constructor(map) {
+        this.map = map;
         this.canvas = {};
         this.context = null;
-        this.pattern = {};
         this.tileset = {};
-        this.getCanvas();
-    }
-    
-    getCanvas() {
-        this.canvas = document.getElementById("canvas-game");
-        console.log(this.canvas);
-        
-        this.context = this.canvas.getContext('2d');
-        
-        this.createMap();
-    }
-    
-    createMap() {
-        this.pattern = {
-            "tileset" : "rpg.png",
-            "terrain" : [
-                [1, 9, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 17, 18, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-            ]
-        };
-        
         this.getTileset();
     }
     
@@ -55,15 +16,28 @@ class CanvasMap {
         // largeur du tileset en tiles
         this.tileset.largeur = this.tileset.image.width / 32;
 
-        console.log(this.context);
-        console.log(this.tileset.image);
-        console.log(this.tileset.image.width);
-        console.log(this.tileset.largeur);
-        
-        this.drawMap(this.context);
+        this.getCanvas();
+    }
+
+
+    getCanvas() {
+        this.canvas = document.getElementById("canvas-game");        
+        this.context = this.canvas.getContext('2d');
+
+        this.canvas.width = this.map[0].length * 32;
+        this.canvas.height = this.map.length * 32;
+
+        this.fillMap();
+    }
+
+    fillMap() {
+        let dessiner = () => {
+            this.drawMap();
+        }
+        this.intervalId = setInterval(dessiner, 40);
     }
     
-    drawTile(numero, context, xDestination, yDestination) {        
+    drawTile(numero, xDestination, yDestination) {        
         let xSourceEnTiles = numero % this.tileset.largeur;
         if (xSourceEnTiles == 0) {
             xSourceEnTiles = this.tileset.largeur;
@@ -74,30 +48,16 @@ class CanvasMap {
         let xSource = (xSourceEnTiles - 1) * 32;
         let ySource = (ySourceEnTiles - 1) * 32;
 
-               
-
-        this.context.drawImage(this.tileset.image, xSource, ySource, 32, 32, xDestination, yDestination, 32, 32);
+        this.context.drawImage(this.tileset.image, xSource, ySource, 32, 32, xDestination, yDestination, 32, 32);        
     }
     
-    drawMap(context) {
-        for (let i = 0; i < this.pattern.terrain.length; i++) {
-            let line = this.pattern.terrain[i];
+    drawMap() {
+        for (let i = 0; i < this.map.length; i++) {
+            let line = this.map[i];
             let y = i * 32;
             for (let j = 0; j < line.length; j++) {
-                this.drawTile(line[j], context, j * 32, y);
-
-                console.log(j * 32);
-                console.log(y);
+                this.drawTile(line[j], j * 32, y);
             }
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    } 
 }

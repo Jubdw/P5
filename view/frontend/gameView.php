@@ -5,9 +5,8 @@
 	<canvas id="canvas-game">Votre navigateur ne supporte pas HTML5, veuillez le mettre à jour pour jouer.</canvas>
 </div>
 
-<script>
-	const pouletteGame = new CanvasMap();
-</script>
+<script src="public/js/map.js"></script>
+<script src="public/js/app.js"></script>
 
 <?php $content = ob_get_clean(); ?>
 
