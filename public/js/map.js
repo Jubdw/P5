@@ -1,9 +1,10 @@
 class CanvasMap {
-    constructor(map) {
+    constructor(map, decorations) {
         this.map = map;
+        this.decorations = decorations;
+        this.tileset = {};
         this.canvas = {};
         this.context = null;
-        this.tileset = {};
         this.getTileset();
     }
     
@@ -50,6 +51,20 @@ class CanvasMap {
 
         this.context.drawImage(this.tileset.image, xSource, ySource, 32, 32, xDestination, yDestination, 32, 32);        
     }
+
+    drawDecorations(i) {
+        let xSourceEnTiles = this.decorations[i].numero % this.tileset.largeur;
+        if (xSourceEnTiles == 0) {
+            xSourceEnTiles = this.tileset.largeur;
+        }
+
+        let ySourceEnTiles = Math.ceil(this.decorations[i].numero / this.tileset.largeur);
+
+        let xSource = (xSourceEnTiles - 1) * 32;
+        let ySource = (ySourceEnTiles - 1) * 32;
+
+        this.context.drawImage(this.tileset.image, xSource, ySource, 32, 32, (this.decorations[i].x * 32), (this.decorations[i].y * 32), 32, 32);
+    }
     
     drawMap() {
         for (let i = 0; i < this.map.length; i++) {
@@ -58,6 +73,9 @@ class CanvasMap {
             for (let j = 0; j < line.length; j++) {
                 this.drawTile(line[j], j * 32, y);
             }
+        }
+        for (let i = 0; i < this.decorations.length; i++) {
+            this.drawDecorations(i);
         }
     } 
 }
