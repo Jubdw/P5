@@ -4,6 +4,7 @@ class CanvasMap {
         this.border = border;
         this.decorations = decorations;
         this.tileset = {};
+        this.kadoc = {};
         this.poulette = {};
         this.canvas = {};
         this.context = null;
@@ -18,6 +19,27 @@ class CanvasMap {
 
         // largeur du tileset en tiles
         this.tileset.largeur = this.tileset.image.width / 32;
+
+        this.createKadoc();
+    }
+
+    createKadoc() {
+        this.kadoc.image = document.createElement('img');
+        this.kadoc.image.src = 'game/sprites/test.png';
+        this.kadoc.image.width = 64;
+        this.kadoc.image.height = 64;
+
+        this.kadoc.largeur = this.kadoc.image.width / 4;
+        this.kadoc.hauteur = this.kadoc.image.height / 4;
+
+        this.kadoc.x = 0;
+        this.kadoc.y = 9;
+
+        this.kadoc.direction = 0;
+
+        this.animationDuration = 4;
+        this.travelTime = 15;
+        this.animationState = -1;
 
         this.createPoulette();
     }
@@ -36,7 +58,6 @@ class CanvasMap {
             this.poulette.direction = Math.floor(Math.random() * Math.floor(4));
         }
         this.intervalId = setInterval(getRandomDirection, 1000);
-
 
         this.poulette.position = Math.floor(Math.random() * Math.floor(3));
         if (this.poulette.position == 0) {
@@ -63,7 +84,31 @@ class CanvasMap {
         this.canvas.width = this.map[0].length * 32;
         this.canvas.height = this.map.length * 32;
 
+        this.keyboardUse();
+
         this.fillMap();
+    }
+
+    keyboardUse() {
+        document.addEventListener('keydown', (event) => {
+        let key = event.keyCode;
+        switch(key) {
+            case 38 : case 122 : case 119 : case 90 : case 87 : // Flèche haut, z, w, Z, W
+                this.moveKadoc(3);
+                break;
+            case 40 : case 115 : case 83 : // Flèche bas, s, S
+                this.moveKadoc(0);
+                break;
+            case 37 : case 113 : case 97 : case 81 : case 65 : // Flèche gauche, q, a, Q, A
+                this.moveKadoc(1);
+                break;
+            case 39 : case 100 : case 68 : // Flèche droite, d, D
+                this.moveKadoc(2);
+                break;
+            default :
+            return true;
+        }
+        });
     }
 
     fillMap() {
@@ -72,7 +117,48 @@ class CanvasMap {
         }
         this.intervalId = setInterval(draw, 40);
     }
-    
+
+    checkNextCase(direction) {
+        let coord = {'x' : this.kadoc.x, 'y' : this.kadoc.y};
+        switch(direction) {
+            case 0 :
+                coord.y++;
+                break;
+            case 1 :
+                coord.x--;
+                break;
+            case 2 :
+                coord.x++;
+                break;
+            case 3 :
+                coord.y--;
+                break;
+        }
+        return coord;
+    }
+
+    moveKadoc(direction) {
+        if (this.animationState >= 0) {
+            return false;
+        }
+
+        this.kadoc.direction = direction;
+
+        let nextCase = this.checkNextCase(direction);
+        if (nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= this.map.length || nextCase.y >= this.map[0].length) {
+            return false;
+        }
+
+        this.animationState = 1;
+
+        this.kadoc.x = nextCase.x;
+        this.kadoc.y = nextCase.y;
+
+        return true;
+    }
+
+    // Fonctions de dessin -> drawMap est en bas.
+
     drawTile(numero, xDestination, yDestination) {        
         let xSourceEnTiles = numero % this.tileset.largeur;
         if (xSourceEnTiles == 0) {
@@ -89,6 +175,38 @@ class CanvasMap {
 
     drawPoulette() {
         this.context.drawImage(this.poulette.image, this.poulette.largeur, this.poulette.hauteur * this.poulette.direction, 32, 32, (this.poulette.x * 32) + 3, (this.poulette.y * 32) + 3, 16, 16);
+    }
+
+    drawKadoc() {
+        let frame = 0;
+        let shiftX = 0;
+        let shiftY = 0;
+
+        if (this.animationState >= this.travelTime) {
+            this.animationState = -1;
+        }
+        else if (this.animationState >= 0) {
+            frame = Math.floor(this.animationState / this.travelTime);
+            if (frame > 3) {
+                frame %= 4;
+            }
+
+            let travelDistance = 32 - (32 * (this.animationState / this.travelTime));
+
+            if (this.kadoc.direction == 3) {
+                shiftY = travelDistance;
+            } else if (this.kadoc.direction == 0) {
+                shiftY = -travelDistance;
+            } else if (this.kadoc.direction == 1) {
+                shiftX = travelDistance;
+            } else if (this.kadoc.direction == 2) {
+                shiftX = -travelDistance;
+            }
+
+            this.animationState++;
+        }
+
+        this.context.drawImage(this.kadoc.image, this.kadoc.largeur * frame, this.kadoc.hauteur * this.kadoc.direction, this.kadoc.largeur, this.kadoc.hauteur, (this.kadoc.x * 32) - (this.kadoc.largeur / 2) + 16 + shiftX, (this.kadoc.y * 32) - this.kadoc.hauteur + 24 + shiftY, this.kadoc.largeur, this.kadoc.hauteur);
     }
     
     drawMap() {
@@ -118,5 +236,7 @@ class CanvasMap {
                 this.drawTile(line[j], j * 32, y);
             }
         }
+        // À Kadoc !
+        this.drawKadoc();
     } 
 }
