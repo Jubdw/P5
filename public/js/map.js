@@ -1,8 +1,9 @@
 class CanvasMap {
-    constructor(map, border, decorations) {
+    constructor(map, border, decorations, hidingDecorations) {
         this.map = map;
         this.border = border;
         this.decorations = decorations;
+        this.hidingDecorations = hidingDecorations;
         this.tileset = {};
         this.kadoc = {};
         this.poulette = {};
@@ -25,9 +26,9 @@ class CanvasMap {
 
     createKadoc() {
         this.kadoc.image = document.createElement('img');
-        this.kadoc.image.src = 'game/sprites/test.png';
-        this.kadoc.image.width = 64;
-        this.kadoc.image.height = 64;
+        this.kadoc.image.src = 'game/sprites/exemple.png';
+        this.kadoc.image.width = 128;
+        this.kadoc.image.height = 192;
 
         this.kadoc.largeur = this.kadoc.image.width / 4;
         this.kadoc.hauteur = this.kadoc.image.height / 4;
@@ -145,10 +146,15 @@ class CanvasMap {
         this.kadoc.direction = direction;
 
         let nextCase = this.checkNextCase(direction);
-        if (nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= this.map.length || nextCase.y >= this.map[0].length) {
+        if (nextCase.x < 0 || nextCase.y < 1 || nextCase.x >= this.map[0].length || nextCase.y >= this.map.length) {
             return false;
         }
-
+        let a = this.decorations[nextCase.y][nextCase.x];
+        let b = this.border[nextCase.y][nextCase.x];
+        if (a == 17 || a == 18 || a == 25 || a == 26 || a == 33 || a == 34 || a == 41 || a == 47 || a == 48 || a == 64 || a == 66 || a == 72 || b == 81 || b == 89 || b == 97 || b == 98 || b == 105 || b == 106) {
+            return false;
+        }
+        
         this.animationState = 1;
 
         this.kadoc.x = nextCase.x;
@@ -174,7 +180,13 @@ class CanvasMap {
     }
 
     drawPoulette() {
-        this.context.drawImage(this.poulette.image, this.poulette.largeur, this.poulette.hauteur * this.poulette.direction, 32, 32, (this.poulette.x * 32) + 3, (this.poulette.y * 32) + 3, 16, 16);
+        this.context.drawImage(
+            this.poulette.image,
+            this.poulette.largeur, this.poulette.direction * this.poulette.hauteur,
+            32, 32,
+            (this.poulette.x * 32) + 3, (this.poulette.y * 32) + 3,
+            16, 16
+        );
     }
 
     drawKadoc() {
@@ -186,7 +198,7 @@ class CanvasMap {
             this.animationState = -1;
         }
         else if (this.animationState >= 0) {
-            frame = Math.floor(this.animationState / this.travelTime);
+            frame = Math.floor(this.animationState / this.animationDuration);
             if (frame > 3) {
                 frame %= 4;
             }
@@ -206,7 +218,13 @@ class CanvasMap {
             this.animationState++;
         }
 
-        this.context.drawImage(this.kadoc.image, this.kadoc.largeur * frame, this.kadoc.hauteur * this.kadoc.direction, this.kadoc.largeur, this.kadoc.hauteur, (this.kadoc.x * 32) - (this.kadoc.largeur / 2) + 16 + shiftX, (this.kadoc.y * 32) - this.kadoc.hauteur + 24 + shiftY, this.kadoc.largeur, this.kadoc.hauteur);
+        this.context.drawImage(
+            this.kadoc.image,
+            this.kadoc.largeur * frame, this.kadoc.direction * this.kadoc.hauteur,
+            this.kadoc.largeur, this.kadoc.hauteur,
+            (this.kadoc.x * 32) - (this.kadoc.largeur / 2) + 16 + shiftX, (this.kadoc.y * 32) - this.kadoc.hauteur + 24 + shiftY,
+            this.kadoc.largeur, this.kadoc.hauteur
+        );
     }
     
     drawMap() {
@@ -238,5 +256,13 @@ class CanvasMap {
         }
         // À Kadoc !
         this.drawKadoc();
+        // décors qui cachent le perso
+        for (let i = 0; i < this.hidingDecorations.length; i++) {
+            let line = this.hidingDecorations[i];
+            let y = i * 32;
+            for (let j = 0; j < line.length; j++) {
+                this.drawTile(line[j], j * 32, y);
+            }
+        }
     } 
 }
