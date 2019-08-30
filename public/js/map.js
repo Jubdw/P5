@@ -154,6 +154,9 @@ class CanvasMap {
         if (a == 17 || a == 18 || a == 25 || a == 26 || a == 33 || a == 34 || a == 41 || a == 47 || a == 48 || a == 64 || a == 66 || a == 72 || b == 81 || b == 89 || b == 97 || b == 98 || b == 105 || b == 106) {
             return false;
         }
+        if (nextCase.x == this.poulette.x && nextCase.y == this.poulette.y) {
+            return false;
+        }
         
         this.animationState = 1;
 
