@@ -1,12 +1,19 @@
 class CanvasMap {
-    constructor(map, border, decorations, hidingDecorations) {
+    constructor(map, border, decorations, hidingTrees, hidingStumps, items) {
         this.map = map;
         this.border = border;
         this.decorations = decorations;
-        this.hidingDecorations = hidingDecorations;
+        this.hidingTrees = hidingTrees;
+        this.hidingStumps = hidingStumps;
+        this.items = items;
         this.tileset = {};
         this.kadoc = {};
         this.poulette = {};
+        this.randomNum = [];
+        this.itemPoints = [];
+        this.randomX = [];
+        this.randomY = [];
+        this.score = 0;
         this.canvas = {};
         this.context = null;
         this.getTileset();
@@ -77,7 +84,6 @@ class CanvasMap {
         this.getCanvas();
     }
 
-
     getCanvas() {
         this.canvas = document.getElementById("canvas-game");        
         this.context = this.canvas.getContext('2d');
@@ -85,6 +91,7 @@ class CanvasMap {
         this.canvas.width = this.map[0].length * 32;
         this.canvas.height = this.map.length * 32;
 
+        this.randomiseItems();
         this.keyboardUse();
 
         this.fillMap();
@@ -105,6 +112,9 @@ class CanvasMap {
                 break;
             case 39 : case 100 : case 68 : // Flèche droite, d, D
                 this.moveKadoc(2);
+                break;
+            case 32 : // Barre espace
+                this.action(this.kadoc.direction);
                 break;
             default :
             return true;
@@ -166,7 +176,65 @@ class CanvasMap {
         return true;
     }
 
+    action(direction) {
+        let nextCase = this.checkNextCase(direction);
+        let hudScore = document.getElementById('hud-score');
+
+        if (nextCase.x == this.poulette.x && nextCase.y == this.poulette.y) {
+            alert('Si Kadoc il surveille bien, il aura des ptits cube de fromage.');
+            this.poulette.x = -1;
+            this.poulette.y = -1;
+        }
+        for (let i = 0; i < this.items.length; i++) {
+            if ((nextCase.x == this.randomX[i] && nextCase.y == this.randomY[i]) || (this.kadoc.x == this.randomX[i] && this.kadoc.y == this.randomY[i])) {
+                alert('À Kadoc !');
+                this.randomX[i] = -1;
+                this.randomY[i] = -1;
+                this.score += this.itemPoints[i];
+                hudScore.textContent = 'Score : ' + this.score;
+            }
+        }
+    }
+
+    randomiseItems() {
+        for (let i = 0; i < this.items.length; i++) {
+            let rNumber = Math.floor(Math.random() * Math.floor(3));
+            if (rNumber == 0) {
+                this.randomNum.push(this.items[i][0]);
+                this.itemPoints.push(this.items[i][3]);
+            } else if (rNumber == 1) {
+                this.randomNum.push(this.items[i][1]);
+                this.itemPoints.push(this.items[i][4]);
+            } else {
+                this.randomNum.push(this.items[i][2]);
+                this.itemPoints.push(this.items[i][5]);
+            }
+            let rX = Math.floor(Math.random() * Math.floor(3));
+            if (rX == 0) {
+                this.randomX.push(this.items[i][6]);
+            } else if (rX == 1) {
+                this.randomX.push(this.items[i][7]);
+            } else {
+                this.randomX.push(this.items[i][8]);
+            }
+            let rY = Math.floor(Math.random() * Math.floor(3));
+            if (rY == 0) {
+                this.randomY.push(this.items[i][9]);
+            } else if (rY == 1) {
+                this.randomY.push(this.items[i][10]);
+            } else {
+                this.randomY.push(this.items[i][11]);
+            }
+        }
+    }
+
     // Fonctions de dessin -> drawMap est en bas.
+
+    drawItems() {
+        for (let i = 0; i < this.items.length; i++) {
+            this.drawTile(this.randomNum[i], this.randomX[i] * 32, this.randomY[i] * 32);
+        }
+    }
 
     drawTile(numero, xDestination, yDestination) {        
         let xSourceEnTiles = numero % this.tileset.largeur;
@@ -247,8 +315,6 @@ class CanvasMap {
                 this.drawTile(line[j], j * 32, y);
             }
         }
-        // la poulette qui sera bien cachée par le décors
-        this.drawPoulette();
         // décors
         for (let i = 0; i < this.decorations.length; i++) {
             let line = this.decorations[i];
@@ -257,11 +323,24 @@ class CanvasMap {
                 this.drawTile(line[j], j * 32, y);
             }
         }
+        // la poulette qui sera bien cachée par le décors
+        this.drawPoulette();
+        // les objets à ramasser
+        this.drawItems();
+        
+        // les souches d'arbres qui cachent la poulette et les objets mais pas Kadoc
+        for (let i = 0; i < this.hidingStumps.length; i++) {
+            let line = this.hidingStumps[i];
+            let y = i * 32;
+            for (let j = 0; j < line.length; j++) {
+                this.drawTile(line[j], j * 32, y);
+            }
+        }
         // À Kadoc !
         this.drawKadoc();
         // décors qui cachent le perso
-        for (let i = 0; i < this.hidingDecorations.length; i++) {
-            let line = this.hidingDecorations[i];
+        for (let i = 0; i < this.hidingTrees.length; i++) {
+            let line = this.hidingTrees[i];
             let y = i * 32;
             for (let j = 0; j < line.length; j++) {
                 this.drawTile(line[j], j * 32, y);

@@ -13,9 +13,9 @@
 
 	    	<div id="hud">
 	    		<a href="index.php"><img src="public/images/logo.png" alt="Elle est où la poulette ?"></a>
-	    		<span>Temps restant</span>
-	    		<span>Score</span>
-	    		<span>Etc...</span>
+	    		<p id ="hud-timer">Temps restant</p>
+	    		<p id="hud-score">Score</p>
+	    		<p>Etc...</p>
 	    	</div>
 
 			<canvas id="canvas-game">Votre navigateur ne supporte pas HTML5, veuillez le mettre à jour pour jouer.</canvas>
