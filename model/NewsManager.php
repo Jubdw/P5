@@ -19,9 +19,8 @@ class NewsManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM news WHERE id = ?');
         $req->execute([$newsId]);
-        $news = $req->fetch();
 
-        return $news;
+        return $req;
     }
 
     public function countNews()
@@ -44,4 +43,30 @@ class NewsManager extends Manager
         return $req;
     }
 
+    public function addNews($title, $content)
+    {
+        $db = $this->dbConnect();
+        $newPost = $db->prepare('INSERT INTO news(title, content, creation_date) VALUES(?, ?, NOW())');
+        $createNew = $newPost->execute([$title, $content]);
+        
+        return $createNew;
+    }
+
+    public function editNews($id, $title, $content)
+    {
+        $db = $this->dbConnect();
+        $editedPost = $db->prepare('UPDATE news SET title = ?, content = ? WHERE id = ?');
+        $affectedLines = $editedPost->execute([$title, $content, $id]);
+
+        return $affectedLines;
+    }
+
+    public function deleteNews($id)
+    {
+        $db = $this->dbConnect();
+        $deletedNews = $db->prepare('DELETE FROM news WHERE id = ?');
+        $affectedLines = $deletedNews->execute([$id]);
+
+        return $affectedLines;
+    }
 }

@@ -9,6 +9,8 @@ body
     width: 100%;
     margin: 0 0;
     font-family: Calibri,Helvetica,Arial,sans-serif;    
+    background-image: url(../images/coq.jpg);
+    background-repeat: repeat;
 }
 header
 {
@@ -21,7 +23,7 @@ header
     align-items: center;
     width: 100%;
     height: 70px;
-    background-color: rgb(32,32,32);
+    background-color: rgb(16,16,16);
     color: white;
 }
 .header-logo img
@@ -78,18 +80,16 @@ nav a:hover, footer a:hover
 }
 h1, h2, h3, h4
 {
+    font-family: 'folkard_', Arial, sans-serif;
+    font-size: 3.5em;
+    color: black;
+    text-transform: uppercase;
     text-align:center;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 20px;
     margin-top: 20px;
-}
-h1
-{
-    font-family: 'folkard_', Arial, sans-serif;
-    font-size: 3.5em;
-    color: black;
-    text-transform: uppercase;
+    text-shadow: 1px 1px 2px white;
 }
 h2
 {
@@ -102,7 +102,6 @@ h3
 h4
 {
     font-size: 1.5em;
-    text-transform: uppercase;
 }
 
 footer
@@ -110,6 +109,7 @@ footer
     position: relative;
     bottom: 0;
     width: 100%;
+    clip-path: ellipse(40% 100% at 50% 100%);
 }
 
 #legal
@@ -119,15 +119,12 @@ footer
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(32,32,32);
+    background-color: rgb(16,16,16);
     color: white;
 }
 #legal p { margin: 2px; }
-.links
-{
-    text-align: center;
-}
-.titles, .title
+
+.titles, .title, .sub-title
 {
     height: 250px;
     display: flex;
@@ -140,7 +137,16 @@ footer
 {
     height: 200px;
 }
-
+.title-links
+{
+    height: 300px;
+    text-align: center;
+}
+.sub-title
+{
+    height: 100px;
+}
+.sub-title-spaced { height: 162px; }
 .titles-contact
 {
     height: 200px;
@@ -163,26 +169,30 @@ footer
 {
     font-size: 2em;
 }
-.title a, .episode a, .home-episode a
+.episode a, .home-episode a
 {
     color: rgb(24,24,24);
 }
-.title a:hover
+.title a { color: white; }
+.title a:hover, .episode a:hover, .home-episode a:hover
 {
     text-decoration-line: underline;
-    color: rgb(55,55,55);
+    color: rgb(255,55,55);
 }
 
-/* ------ PAGINATION ------ */
+/* ------ PAGINATION ------ ! ------ PAGINATION ------ ! ------ PAGINATION ------ */
 .paging
 {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-    padding: 1%;
-    margin: 1%;
+    padding: 2px;
+    margin: 0;
     border: 1px solid black;
-    border-radius: 2%;
+    border-radius: 25%;
+    margin-bottom: 2px;
+    background-color: rgba(240,240,240, 0.9);
 }
 
 .current-page, .other-pages
@@ -196,37 +206,129 @@ footer
 }
 
 
-/* ------ HOME VIEW ------ */
-.poulette
+/* ------ HOME VIEW ------ ! ------ HOME VIEW ------ ! ------ HOME VIEW ------ */
+#citation, .poulette h1, .poulette a
 {
+    text-shadow: 4px 2px 2px black;
+}
+#citation
+{
+    padding: 8px;
+    width: 90%;
+    color: white;
+    font-size: 2.4em;
+    text-align: center;
+}
+.welcome
+{
+    position: relative;
     width: 100%;
     height: 93vh;
+    z-index: 99;
+    display: grid;
+    grid-template: repeat(6, 16.66%) / 7.5% 85% 7.5%;
+}
+.welcome-play-button a
+{
+    padding: 12px;
+    text-decoration: none;
+    color: rgb(250,10,10);
+    font-size: 2em;
+    border: 1px solid black;
+    border-radius: 25%;
+    background-color: black;
+    transition: background-color ease 0.6s;
+}
+.welcome-play-button a:hover
+{
+    color: rgb(200,0,0);
+    background-color: rgba(125,125,125, 0.5);
+}
+.welcome h1
+{
+    color: white;
+}
+.welcome-play-button { grid-row-start: 2 }
+.welcome-quote { grid-row-start: 5 }
+.welcome-scroll-button { grid-row-start: 6 }
+.welcome-title, .welcome-quote, .welcome-play-button, .welcome-scroll-button {
+    grid-column-start: 2;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    background-color: rgb(40,40,40);
-    margin: 0;
+    align-items: center;
 }
-.poulette a
+#scroll-bottom
 {
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
     color: white;
+    background: black;
+    transition: background-color ease 0.6s;
 }
-.poulette a:hover
+#scroll-bottom:hover
 {
-    color: red;
+    cursor: pointer;
+    background: rgba(240,240,240, 0.4);
 }
-.poulette h1
+.poulette-background
 {
-    color: white;
-}
-.animation-poulette
-{
-    
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 150px;
-    background-color: rgb(145,145,145);
+    height: 93vh;
+    overflow: hidden;
 }
-
+.poulette-background img
+{
+    z-index: 1;
+    width: 100%;
+}
+.separation
+{
+    width: 100%;
+    height: 40px;
+    background-color: rgb(24,24,24);
+    border: 2px solid black;
+}
+.home-content, .content-home-scores
+{
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.content-home-scores
+{
+    width: 40%;
+}
+.home-news-title a, .home-scores-title a
+{
+    text-decoration: none;
+    color: black;
+}
+.home-scores
+{
+    width: 100%;
+    display: grid;
+    grid-template: 80px / repeat(3, 33.33%);
+    border: 1px solid black;
+    border-radius: 1%;
+    background-color: rgba(250,250,250, 0.8);
+}
+.home-scores-title { font-size: 0.8em; }
+.home-scores-name, .home-scores-value, .home-scores-link
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+    font-family: 'folkard_';
+}
 .home-news
 {
     width: 80%;
@@ -239,21 +341,10 @@ footer
     flex-direction: row;
     justify-content: center;
 }
-.home-news-title
+.home-news-title, .home-scores-title
 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 0 0 10px 0;
+    margin-top: 30px;
 }
-.home-news-title a
-{
-    text-decoration: none;
-    color: black;
-}
-.home-news-title a:hover { text-decoration: underline; }
 .h-news
 {
     width: 40%;
@@ -264,8 +355,8 @@ footer
     background-color: rgba(250,250,250, 0.8);
     font-size: 1em;
 }
-
-/* ------ LISTNEWS + NEWS VIEW ------ */
+.h-news a { text-decoration: none; }
+/* ------ LISTNEWS + NEWS VIEW ------ ! ------ LISTNEWS + NEWS VIEW ------*/
 .news
 {
     width: 70%;
@@ -275,6 +366,7 @@ footer
     border-radius: 2%;
     background-color: rgba(240,240,240, 0.8);
     font-size: 1.1em;
+    text-align: justify;
 }
 .news em 
 {
@@ -283,6 +375,12 @@ footer
 .news-post
 {
     border-radius: 1px;
+    text-align: justify;
+}
+.news-post img
+{
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 .news-title
 {
@@ -292,6 +390,7 @@ footer
 {
     font-family: 'folkard_';
     color: black;
+    text-decoration: none;
 }
 .list-news
 {
@@ -307,7 +406,7 @@ footer
     align-items: center;
     text-align: center;
 }
-/* ------ ERROR VIEW ------ */
+/* ------ ERROR VIEW ------ ! ------ ERROR VIEW ------ ! ------ ERROR VIEW ------ */
 
 .error-div
 {
@@ -333,7 +432,7 @@ footer
     font-weight: bold;
 }
 
-/* ------ REGISTER VIEW ------ */
+/* ------ REGISTER VIEW ------ ! ------ REGISTER VIEW ------ ! ------ REGISTER VIEW ------ */
 
 .connect-forms
 {
@@ -366,7 +465,7 @@ footer
 }
 .register-form h4, .login-form h4
 {
-    color: rgb(70,180,220);
+    color: rgb(240,80,40);
 }
 .register-form form, .login-form form
 {
@@ -388,38 +487,599 @@ footer
     justify-content: center;
     transform: scale(1.4);
 }
-/* ------ GAME VIEW  ------ */
+/* ------ SCORE VIEW  ------ ! ------ SCORE VIEW  ------ ! ------ SCORE VIEW  ------*/
+.score-div
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-start;
+}
+#list-best-scores, #list-all-scores
+{
+    width: 100%;
+}
+#list-all-scores
+{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container-best
+{
+    display: grid;
+    grid-template: 100px / 22.5% 5% repeat(3, 15%) 5% 22.5%;
+    font-size: 1.6em;
+}
+.avatar { grid-column-start: 2; overflow: hidden; }
+.column-name { grid-column-start: 3; }
+.column-item { font-weight: bold; }
+.container-names, .column-item
+{
+    height: 40px;
+}
+.container-all
+{
+    width: 100%;
+    display: grid;
+    grid-template: 60px / 35% 10% 10% 10% 35%;
+    font-size: 1.2em;
+}
+.rank { grid-column-start: 2 }
+.column-position { grid-column-start: 2 }
+.score, .user-name, .avatar, .total-games, .user-profile-link, .all-user-name, .all-score, .rank, .column-item
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(240,240,240, 0.8);
+    margin-bottom: 2px;
+    background-color: rgba(240,240,240, 0.8);
+}
+.user-profile-link a { color: rgb(160,85,85); }
+.user-profile-link a:hover { color: rgb(220,170,170); }
+.score, .user-score
+{
+    font-weight: bold;
+    text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+}
+.avatar img
+{
+    max-height: 98px;
+    max-width: 98px;
+}
+/* ------ ABOUT VIEW ------ ! ------ ABOUT VIEW ------ ! ------ ABOUT VIEW ------*/
+.about, #comment-section, .comment-list
+{
+    padding: 12px;
+    width: 70%;
+    font-size: 1.6em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: rgba(240,240,240, 0.8);
+}
+.about { padding: 24px; text-align: justify; }
+.about img
+{
+    max-width: 120px;
+    max-height: 1em;
+}
+#about-quote
+{
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+#comment-section form
+{
+    text-align: center;
+}
+#comment-section, .comment-list
+{
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+.comment
+{
+    margin-top: 6px;
+    padding: 12px;
+    width: 90%;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: rgba(240,240,240, 0.8);
+}
+.comment p
+{
+    margin: 0;
+}
+.link-update
+{
+    width: 99%;
+    text-align: right;
+    text-decoration: underline;
+}
+.link-update a:hover { font-weight: bold; color: rgb(80,40,40); }
+.update-comment
+{
+    width: 80%;
+    height: 60vh;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(240,240,240, 0.4);
+    font-size: 1.2em;
+}
+/* ------ PROFILE VIEW  ------ ! ------ PROFILE VIEW  ------ ! ------ PROFILE VIEW  ------ */
+.user-profile
+{
+    width : 80%;
+    margin: 2% 10%;
+    padding: 0;
+    border: 2px solid black;
+    border-radius: 2%;
+    background-color: rgba(240,240,240, 0.8);
+    font-size: 1.4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.user-avatar
+{
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    overflow: hidden;
+}
+.user-avatar, .user-avatar img
+{
+    max-width: 250px;
+    max-height: 250px;
+}
+.user-info
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.games-data
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.user-signature
+{
+    padding: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 2%;
+    background-color: rgba(240,240,240, 0.4);
+}
+.link-edit
+{
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+}
+.user-comments
+{
+    width: 80%;
+    margin: 2% 8%;
+    padding: 1%;
+    border: 1px solid black;
+    border-radius: 2%;
+    background-color: rgba(240,240,240, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ------ EDIT PROFILE VIEW  ------ ! ------ EDIT PROFILE VIEW  ------ */
+.edit-profile
+{
+    height: 200px;
+    width: 70%;
+    margin: 2% 13%;
+    padding: 1%;
+    border: 1px solid black;
+    border-radius: 2%;
+    background-color: rgba(240,240,240, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.edit-password
+{
+    height: 280px;
+}
+.edit-inputs, .edit-avatar
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edit-signature
+{
+    height: 320px;
+}
+/* ------ ADMIN VIEW ------ ! ------ ADMIN VIEW ------ ! ------ ADMIN VIEW ------ */
+.management-link
+{
+    width: 30%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    border: 1px solid black;
+    border-radius: 25%;
+    background-color: rgba(240,240,240, 0.8);
+    margin-bottom: 40px;
+}
+.management-link a
+{
+    color: black;
+    text-decoration: none;
+}
+.management-link a:hover
+{
+    text-decoration: underline;
+}
+.admin-user
+{
+    margin-bottom: 12px;
+    width: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 100px 40px 80px 40px;
+    border: 1px solid black;
+    background-color: rgba(240,240,240, 0.8);
+}
+.admin-user-avatar, .admin-user-name, .admin-user-id, .admin-user-register-date, .admin-user-email, .admin-user-score, .admin-user-total, .admin-user-sign, .admin-user-status, .admin-user-status-button, .admin-comment-id, .admin-comment-user-id, .admin-comment-user-name, .admin-comment-comment, .admin-comment-date, .admin-comment-delete, .admin-news-id, .admin-news-title, .admin-news-date, .admin-news-content, .admin-news-button-edit
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+}
+.admin-user-email, .admin-user-score, .admin-user-total, .admin-user-sign, .admin-user-status, .admin-user-status-button
+{
+    border: 1px solid black;
+    border-radius: 2%;
+}
+.admin-user-avatar
+{
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+}
+.admin-user-avatar img
+{
+    max-width: 200px;
+    max-height: 200px;
+}
+.admin-user-name
+{
+    grid-column-start: 2;
+    grid-column-end: span 2;
+}
+.admin-user-id
+{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+.admin-user-register-date
+{
+    grid-row-start: 2;
+    grid-column-start: 3;
+}
+.admin-user-email
+{
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+.admin-user-score
+{
+    font-weight: bold;
+    font-size: 1.3em;
+}
+.admin-user-sign
+{
+    grid-column-start: 1;
+    grid-column-end: span 3;
+    grid-row-start: 4;
+    font-style: italic;
+}
+.admin-user-status
+{
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    grid-row-start: 5;
+}
+.admin-user-status-button
+{
+    grid-column-start: 3;
+    grid-row-start: 5;
+    background-color: rgba(96,192,96, 0.8);
+}
+.admin-user-status-button a
+{
+    color: black;
+    text-decoration: none;
+}
+.admin-user-status-button a:hover
+{
+    color: red;
+    text-decoration: underline;
+}
+
+.admin-comment
+{
+    width: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 60px);
+    border: 1px solid black;
+    background-color: rgba(240,240,240, 0.8);
+    margin-bottom: 12px;
+}
+.admin-comment-id { grid-column-start: 1; }
+.admin-comment-user-id { grid-column-start: 2; }
+.admin-comment-comment
+{
+    grid-column-start: 1;
+    grid-column-end: span 4;
+    grid-row-start: 2;
+    font-size: 1.4em;
+}
+.admin-comment-user-name
+{
+    grid-column-start: 3;
+    grid-column-end: span 2;
+    font-weight: bold;
+    font-size: 1.6em;
+}
+.admin-comment-date
+{
+    grid-column-start: 1;
+    grid-column-end: span 3;
+    grid-row-start: 3;
+}
+.admin-comment-delete
+{
+    grid-column-start: 4;
+    grid-row-start: 3;
+}
+.admin-comment-delete a
+{
+    color: black;
+    text-decoration: none;
+}
+.admin-comment-delete a:hover
+{
+    text-decoration: underline;
+    font-weight: bold;
+    color: red;
+}
+
+.create-news
+{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: rgba(240,240,240, 0.9);
+    margin-bottom: 20px;
+}
+.create-news a
+{
+    color: black;
+}
+
+.admin-news
+{
+    width: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 40px 1fr 40px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: rgba(240,240,240, 0.8);
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+.admin-news-title
+{
+    font-weight: bold;
+    font-size: 1.6em;
+}
+.admin-news-content
+{
+    grid-column-start: 1;
+    grid-column-end: span 3;
+    grid-row-start: 2;
+    font-size: 1.4em;
+}
+.admin-news-button-edit
+{
+    grid-column-start: 2;
+    grid-row-start: 3;
+    background-color: rgba(240,240,240, 0.8);
+    border: 1px solid black;
+    border-radius: 4px;
+}
+.admin-news-button-edit a
+{
+    color: black;
+    text-decoration: none;
+}
+.admin-news-button-edit a:hover
+{
+    color: rgb(24,48,192);
+    text-decoration: underline;
+}
+
+.admin-news-form
+{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: rgba(240,240,240, 0.8);
+}
+/* ------ GAME VIEW  ------ ! ------ GAME VIEW  ------ ! ------ GAME VIEW  ------*/
 #canvas-div
 {
+    position: relative;
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(205,205,205);
+    background-image: url('../images/coq.jpg');
 }
 #canvas-game
 {
     width: 1320px;
     height: 880px;
     border: 1px solid black;
+    opacity: 1;
+    transition: all 1.5s ease-out;
 }
 #hud
 {
     width: 1322px;
     height: 80px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: black;
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 100px;
+    grid-template-rows: 80px;
+    background-color: rgb(24,24,24);
     color: white;
+    opacity: 1;
+    transition: all 1.5s ease-out;
 }
 #hud img
 {
     max-height: 76px;
 }
-/* ------ SCROLL BUTTON ------ */
+#hud-timer, #hud-score, #hud-player-name
+{
+    font-weight: bold;
+    font-size: 2.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#hud-timer
+{
+    color: rgb(232,218,121);
+}
+#hud-score
+{
+    color: rgb(207,103,29);
+}
+#hud-player-name a
+{
+    text-decoration: none;
+    color: white;
+}
+#hud-player-name a:hover
+{
+    text-decoration: underline;
+    color: rgb(103,114,211);
+}
+#filter
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(180,220,220, 0.3);
+    z-index: 10;
+}
+#startButton, #saveScore, #saveButton, #exitSaveButton
+{
+    transform: scale(1.6);
+}
+#saveButton
+{
+    margin-top: 16px;
+}
+#exitSaveButton
+{
+    margin-top: 24px;
+}
+#startDiv, #endDiv
+{
+    width: 800px;
+    height: 400px;
+    font-weight: bold;
+    font-size: 1.3em;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 2%;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#endDiv
+{
+    width: 900px;
+    height: 600px;
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+#endDiv form
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#endScoreTotal
+{
+    font-size: 1.5em;
+}
+/* ------ SCROLL BUTTON ------ ! ------ SCROLL BUTTON ------ ! ------ SCROLL BUTTON ------ */
 a#b-Back
 {
     border-radius:3px;

@@ -6,4 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		top: 0,
 		behavior: 'smooth',
 	}));
+	document.getElementById("scroll-bottom").addEventListener('click', () => window.scrollTo({
+		top: 1040,
+		behavior: 'smooth',
+	}));
 });

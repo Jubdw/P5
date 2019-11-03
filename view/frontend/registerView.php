@@ -2,7 +2,8 @@
 
 <?php ob_start(); ?>
 <div class="titles">
-	<h1>Connexion ou inscription à l'espace membre :</h1>
+	<h1>Connexion - inscription</h1>
+	<h2>Vous devez vous inscrire pour jouer</h2>
 </div>
 
 <div class="connect-forms">

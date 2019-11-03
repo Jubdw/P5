@@ -1,4 +1,4 @@
-class CanvasMap {
+class GameMap {
     constructor(map, border, decorations, hidingTrees, hidingStumps, items) {
         this.map = map;
         this.border = border;
@@ -9,10 +9,6 @@ class CanvasMap {
         this.tileset = {};
         this.kadoc = {};
         this.poulette = {};
-        this.randomNum = [];
-        this.itemPoints = [];
-        this.randomX = [];
-        this.randomY = [];
         this.score = 0;
         this.canvas = {};
         this.context = null;
@@ -92,9 +88,236 @@ class CanvasMap {
         this.canvas.height = this.map.length * 32;
 
         this.randomiseItems();
-        this.keyboardUse();
-
+        this.openingScreen();
         this.fillMap();
+    }
+
+    randomiseItems() {
+        this.randomNum = [];
+        this.itemPoints = [];
+        this.randomX = [];
+        this.randomY = [];
+
+        for (let i = 0; i < this.items.length; i++) {
+            let rNumber = Math.floor(Math.random() * Math.floor(3));
+            if (rNumber == 0) {
+                this.randomNum.push(this.items[i][0]);
+                this.itemPoints.push(this.items[i][3]);
+            } else if (rNumber == 1) {
+                this.randomNum.push(this.items[i][1]);
+                this.itemPoints.push(this.items[i][4]);
+            } else {
+                this.randomNum.push(this.items[i][2]);
+                this.itemPoints.push(this.items[i][5]);
+            }
+            let randomPosition = Math.floor(Math.random() * Math.floor(3));
+            if (randomPosition == 0) {
+                this.randomX.push(this.items[i][6]);
+                this.randomY.push(this.items[i][9]);
+            } else if (randomPosition == 1) {
+                this.randomX.push(this.items[i][7]);
+                this.randomY.push(this.items[i][10]);
+            } else {
+                this.randomX.push(this.items[i][8]);
+                this.randomY.push(this.items[i][11]);
+            }
+        }
+    }
+
+    openingScreen() {
+        this.screen = document.getElementById('canvas-div');
+
+        this.filter = document.createElement('div');
+        this.filter.id = 'filter';
+        this.screen.appendChild(this.filter);
+
+        this.startDiv = document.createElement('div');
+        this.startDiv.id = 'startDiv';
+        this.screen.appendChild(this.startDiv);
+
+        this.startInfo = document.createElement('p');
+        this.startInfo.textContent = 'Prêt ? Appuyez sur START pour commencer';
+
+        this.startButton = document.createElement('input');
+        this.startButton.type = 'button';
+        this.startButton.value = 'START';
+        this.startButton.id = 'startButton';
+
+        this.startDiv.appendChild(this.startInfo);
+        this.startDiv.appendChild(this.startButton);
+
+        this.loadSounds();
+    }
+
+    loadSounds() {
+        this.soundDiv = document.getElementById('game-sounds');
+
+        this.akadoc = document.createElement('audio');
+        this.akadoc.src = 'public/sound/a_kadoc.mp3';
+        this.akadoc.id = 'akadoc';
+        this.soundDiv.appendChild(this.akadoc);
+
+        this.rendez = document.createElement('audio');
+        this.rendez.src = 'public/sound/rendez_la_poulette.mp3';
+        this.rendez.id = 'rendez';
+        this.soundDiv.appendChild(this.rendez);
+
+        this.canard = document.createElement('audio');
+        this.canard.src = 'public/sound/canard.mp3';
+        this.canard.id = 'canard';
+        this.soundDiv.appendChild(this.canard);
+
+        this.poisson = document.createElement('audio');
+        this.poisson.src = 'public/sound/poisson.mp3';
+        this.poisson.id = 'poisson';
+        this.soundDiv.appendChild(this.poisson);
+
+        this.pigeons = document.createElement('audio');
+        this.pigeons.src = 'public/sound/pigeons.mp3';
+        this.pigeons.id = 'pigeons';
+        this.soundDiv.appendChild(this.pigeons);
+
+        this.compote = document.createElement('audio');
+        this.compote.src = 'public/sound/compote.mp3';
+        this.compote.id = 'compote';
+        this.soundDiv.appendChild(this.compote);
+
+        this.startGame();
+    }
+
+    startGame() {
+        this.rendez.play();
+        let onStartClick = () => {
+            $(this.filter).css({
+                display : 'none'
+            });
+            $(this.startDiv).css({
+                visibility : 'hidden'
+            });
+            this.startChrono(2, 0);
+            this.keyboardUse();
+        }
+        $('#startButton').on('click', onStartClick);
+    }
+
+    startChrono(minute, seconde) {
+        this.timer = document.getElementById('hud-timer');
+        let tick = () => {
+            this.timer.textContent = 'Temps restant  ' + minute + ' : ' + seconde;
+            if (seconde >= 0) {
+                seconde--;
+            }
+            if (seconde < 0) {
+                minute--;
+                seconde = 59;
+            }
+            if ((minute === 0) && (seconde === 0)) {
+                this.timer.textContent = 'Temps restant  0 : 0';
+                let randomQuote = Math.floor(Math.random() * Math.floor(3));
+                if (randomQuote == 0) {
+                    this.randomSound = this.compote;
+                }
+                else if (randomQuote == 1) {
+                    this.randomSound = this.poisson;
+                }
+                else {
+                    this.randomSound = this.pigeons;
+                }
+                this.randomSound.play();
+                this.endGame();
+            }
+            this.remainingMinute = minute;
+            this.remainingSeconde = seconde;
+        }
+        this.timerInterval = setInterval(tick, 1000);
+    }
+
+    endGame() {
+        clearInterval(this.timerInterval);
+        $('#canvas-game').css({
+            opacity : 0
+        });
+        $('#hud').css({
+            opacity : 0
+        });
+        this.endingScreen();
+        setTimeout( () => {
+            $('#endDiv').css({
+                opacity : 1
+            });
+        }, 1500);
+    }
+
+    endingScreen() {
+        this.endDiv = document.createElement('div');
+        this.endDiv.id = 'endDiv';
+        this.screen.appendChild(this.endDiv);
+
+        this.endInfo = document.createElement('p');
+        this.endInfo.textContent = 'Fin de la partie !';
+
+        this.endScore = document.createElement('p');
+        this.endScore.textContent = 'Votre score : ' + this.score;
+
+        this.endRemainingTime = document.createElement('p');
+        this.endRemainingTime.textContent = ((this.remainingMinute * 60) + this.remainingSeconde) + ' secondes restantes = ' + Math.floor(((this.remainingMinute * 60) + this.remainingSeconde)/2) + ' points supplémentaires';
+
+        this.playerScore = this.score + (this.remainingMinute * 30) + Math.floor(this.remainingSeconde * 0.5);
+
+        this.endScoreTotal = document.createElement('p');
+        this.endScoreTotal.id = 'endScoreTotal';
+        this.endScoreTotal.textContent = 'Score total : ' + this.playerScore;
+
+        this.endDiv.appendChild(this.endInfo);
+        this.endDiv.appendChild(this.endScore);
+        this.endDiv.appendChild(this.endRemainingTime);
+        this.endDiv.appendChild(this.endScoreTotal);
+        
+
+        // ------------------ 
+
+        this.form = document.createElement('form');
+        this.form.action = "index.php?action=saveScorePlay";
+        this.form.method = 'post';
+        this.endDiv.appendChild(this.form);
+
+        this.inputScore = document.createElement('input');
+        this.inputScore.type = 'hidden';
+        this.inputScore.id = 'score';
+        this.inputScore.name = 'score';
+        this.inputScore.value = this.playerScore;
+        
+        this.form.appendChild(this.inputScore);
+
+
+        this.inputSubmit = document.createElement('input');
+        this.inputSubmit.type = 'submit';
+        this.inputSubmit.value = 'Enregistrer et rejouer';
+        this.inputSubmit.id = 'saveButton';
+        this.form.appendChild(this.inputSubmit);
+
+        // -----------------------
+
+        this.exitForm = document.createElement('form');
+        this.exitForm.action = "index.php?action=saveScoreList";
+        this.exitForm.method = 'post';
+        this.endDiv.appendChild(this.exitForm);
+
+        this.exitInputScore = document.createElement('input');
+        this.exitInputScore.type = 'hidden';
+        this.exitInputScore.id = 'score';
+        this.exitInputScore.name = 'score';
+        this.exitInputScore.value = this.playerScore;
+        
+        this.exitForm.appendChild(this.exitInputScore);
+
+
+        this.exitInputSubmit = document.createElement('input');
+        this.exitInputSubmit.type = 'submit';
+        this.exitInputSubmit.value = 'Enregistrer et voir les scores';
+        this.exitInputSubmit.id = 'exitSaveButton';
+        this.exitForm.appendChild(this.exitInputSubmit);
+
     }
 
     keyboardUse() {
@@ -113,7 +336,7 @@ class CanvasMap {
             case 39 : case 100 : case 68 : // Flèche droite, d, D
                 this.moveKadoc(2);
                 break;
-            case 32 : // Barre espace
+            case 32 : case 69 : // Barre espace
                 this.action(this.kadoc.direction);
                 break;
             default :
@@ -181,13 +404,14 @@ class CanvasMap {
         let hudScore = document.getElementById('hud-score');
 
         if (nextCase.x == this.poulette.x && nextCase.y == this.poulette.y) {
-            alert('Si Kadoc il surveille bien, il aura des ptits cube de fromage.');
-            this.poulette.x = -1;
-            this.poulette.y = -1;
+            this.canard.play();
+            this.score += 50;
+            hudScore.textContent = 'Score : ' + this.score;
+            this.endGame();
         }
         for (let i = 0; i < this.items.length; i++) {
             if ((nextCase.x == this.randomX[i] && nextCase.y == this.randomY[i]) || (this.kadoc.x == this.randomX[i] && this.kadoc.y == this.randomY[i])) {
-                alert('À Kadoc !');
+                this.akadoc.play();
                 this.randomX[i] = -1;
                 this.randomY[i] = -1;
                 this.score += this.itemPoints[i];
@@ -196,45 +420,7 @@ class CanvasMap {
         }
     }
 
-    randomiseItems() {
-        for (let i = 0; i < this.items.length; i++) {
-            let rNumber = Math.floor(Math.random() * Math.floor(3));
-            if (rNumber == 0) {
-                this.randomNum.push(this.items[i][0]);
-                this.itemPoints.push(this.items[i][3]);
-            } else if (rNumber == 1) {
-                this.randomNum.push(this.items[i][1]);
-                this.itemPoints.push(this.items[i][4]);
-            } else {
-                this.randomNum.push(this.items[i][2]);
-                this.itemPoints.push(this.items[i][5]);
-            }
-            let rX = Math.floor(Math.random() * Math.floor(3));
-            if (rX == 0) {
-                this.randomX.push(this.items[i][6]);
-            } else if (rX == 1) {
-                this.randomX.push(this.items[i][7]);
-            } else {
-                this.randomX.push(this.items[i][8]);
-            }
-            let rY = Math.floor(Math.random() * Math.floor(3));
-            if (rY == 0) {
-                this.randomY.push(this.items[i][9]);
-            } else if (rY == 1) {
-                this.randomY.push(this.items[i][10]);
-            } else {
-                this.randomY.push(this.items[i][11]);
-            }
-        }
-    }
-
     // Fonctions de dessin -> drawMap est en bas.
-
-    drawItems() {
-        for (let i = 0; i < this.items.length; i++) {
-            this.drawTile(this.randomNum[i], this.randomX[i] * 32, this.randomY[i] * 32);
-        }
-    }
 
     drawTile(numero, xDestination, yDestination) {        
         let xSourceEnTiles = numero % this.tileset.largeur;
@@ -296,6 +482,12 @@ class CanvasMap {
             (this.kadoc.x * 32) - (this.kadoc.largeur / 2) + 16 + shiftX, (this.kadoc.y * 32) - this.kadoc.hauteur + 24 + shiftY,
             this.kadoc.largeur, this.kadoc.hauteur
         );
+    }
+
+    drawItems() {
+        for (let i = 0; i < this.items.length; i++) {
+            this.drawTile(this.randomNum[i], this.randomX[i] * 32, this.randomY[i] * 32);
+        }
     }
     
     drawMap() {
